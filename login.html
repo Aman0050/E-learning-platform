@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login • E‑Learning Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">E‑Learn</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="signup.html">Signup</a>
+      <button id="darkModeToggle" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <section class="card">
+      <h2>Welcome back</h2>
+      <form id="loginForm" class="form-grid">
+        <label>
+          <span>Email</span>
+          <input type="email" id="loginEmail" placeholder="you@example.com" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" id="loginPassword" placeholder="••••••••" required minlength="6" />
+        </label>
+        <button type="submit" class="btn">Login</button>
+        <p class="muted small">No account? <a href="signup.html">Create one</a>.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> E‑Learn</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
