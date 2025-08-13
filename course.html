@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Course • E‑Learning Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">E‑Learn</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <span id="guestNav">
+        <a href="login.html">Login</a>
+        <a href="signup.html">Signup</a>
+      </span>
+      <span id="userNav" class="hidden">
+        <span id="welcomeUser" class="welcome-user"></span>
+        <button id="logoutBtn" class="btn btn-outline small">Logout</button>
+      </span>
+      <button id="darkModeToggle" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <main class="course-page">
+    <h2 id="course-title">Loading…</h2>
+    <p id="course-desc" class="muted"></p>
+
+    <div class="video-container">
+      <iframe id="course-video" src="" title="Course Video" frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+
+    <div class="course-actions">
+      <button id="likeCourse" class="btn">👍 Like <span id="likeCount">0</span></button>
+      <a class="btn btn-outline" href="index.html">← Back</a>
+    </div>
+
+    <section class="card lessons">
+      <h3>Lessons</h3>
+      <ol id="lessonList" class="lesson-list"></ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> E‑Learn</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
