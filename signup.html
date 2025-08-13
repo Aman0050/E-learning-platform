@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Signup • E‑Learning Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">E‑Learn</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="login.html">Login</a>
+      <button id="darkModeToggle" class="icon-btn" title="Toggle dark mode" aria-label="Toggle dark mode">🌙</button>
+    </nav>
+  </header>
+
+  <main class="auth-page">
+    <section class="card">
+      <h2>Create your account</h2>
+      <form id="signupForm" class="form-grid">
+        <label>
+          <span>Name</span>
+          <input type="text" id="name" placeholder="Your name" required />
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" id="email" placeholder="you@example.com" required />
+        </label>
+        <label>
+          <span>Password</span>
+          <input type="password" id="password" placeholder="Min 6 characters" required minlength="6" />
+        </label>
+        <button type="submit" class="btn">Create account</button>
+        <p class="muted small">Already have an account? <a href="login.html">Login</a>.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> E‑Learn</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
