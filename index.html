@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LiteLearn — Offline E-Learning</title>
+  <meta name="description" content="A beautiful offline e-learning platform in pure HTML/CSS/JS with localStorage." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="appbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span class="brand-name">LiteLearn</span>
+      </div>
+
+      <nav class="tabs" role="tablist" aria-label="Primary">
+        <button id="tab-courses" class="tab" role="tab" aria-controls="view-courses" aria-selected="true">Courses</button>
+        <button id="tab-dashboard" class="tab" role="tab" aria-controls="view-dashboard" aria-selected="false">Dashboard</button>
+        <button id="tab-account" class="tab" role="tab" aria-controls="view-account" aria-selected="false">Account</button>
+      </nav>
+
+      <div class="actions">
+        <button id="themeToggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">🌗</button>
+        <span id="welcomeLabel" class="welcome"></span>
+        <button id="logoutBtn" class="btn ghost small hidden">Log out</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- Auth Gate -->
+    <section id="authGate" class="auth">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <h1>Learn beautifully. Offline.</h1>
+          <p class="muted">Register a local account to keep your courses and progress <strong>in this browser only</strong>. No backend. No tracking.</p>
+          <div class="badges">
+            <span class="tag">100% Offline</span>
+            <span class="tag">Local-first</span>
+            <span class="tag">No build tools</span>
+          </div>
+        </div>
+
+        <div class="auth-grid">
+          <form id="loginForm" class="card">
+            <h3>Log in</h3>
+            <label>Email</label>
+            <input id="loginEmail" name="email" type="email" class="input" placeholder="you@example.com" required />
+            <label>Password</label>
+            <input id="loginPassword" name="password" type="password" class="input" placeholder="••••••••" required minlength="4" />
+            <button class="btn primary" type="submit">Log in</button>
+            <p class="hint">No account? Register on the right →</p>
+          </form>
+
+          <form id="registerForm" class="card">
+            <h3>Register</h3>
+            <label>Name</label>
+            <input id="regName" name="name" type="text" class="input" placeholder="Alex Learner" required />
+            <label>Email</label>
+            <input id="regEmail" name="email" type="email" class="input" placeholder="alex@example.com" required />
+            <label>Password</label>
+            <input id="regPassword" name="password" type="password" class="input" placeholder="Choose a password" required minlength="4" />
+            <button class="btn primary" type="submit">Create account</button>
+            <p class="hint">Passwords are stored locally via <code>localStorage</code>.</p>
+          </form>
+        </div>
+
+        <p class="kbd-tip">Tip: Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to focus course search.</p>
+      </div>
+    </section>
+
+    <!-- App Views -->
+    <section id="appViews" class="hidden">
+      <!-- Courses -->
+      <div id="view-courses" role="tabpanel" aria-labelledby="tab-courses">
+        <div class="toolbar card">
+          <div class="toolbar-row">
+            <h2>Browse Courses</h2>
+            <span class="pill"><strong id="courseCount">0</strong>&nbsp;<span class="muted">courses</span></span>
+          </div>
+          <div class="filters">
+            <input id="searchInput" class="input" placeholder="Search title, tags or description…" aria-label="Search courses" />
+            <select id="levelFilter" class="input select">
+              <option value="">All levels</option>
+              <option>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+            </select>
+            <button id="clearFilters" class="btn ghost">Reset</button>
+          </div>
+        </div>
+
+        <div id="coursesGrid" class="grid"></div>
+      </div>
+
+      <!-- Dashboard -->
+      <div id="view-dashboard" class="hidden" role="tabpanel" aria-labelledby="tab-dashboard">
+        <div class="toolbar card">
+          <div class="toolbar-row">
+            <h2>Your Dashboard</h2>
+            <span class="muted">Keep learning from where you left off.</span>
+          </div>
+        </div>
+        <div id="dashboardGrid" class="grid"></div>
+        <div id="emptyDash" class="empty card">
+          <h3>No enrollments yet</h3>
+          <p class="muted">Head to the Courses tab to enroll in your first course.</p>
+        </div>
+      </div>
+
+      <!-- Account -->
+      <div id="view-account" class="hidden" role="tabpanel" aria-labelledby="tab-account">
+        <div class="toolbar card">
+          <div class="toolbar-row">
+            <h2>Account</h2>
+            <span class="muted">Profile & local data</span>
+          </div>
+          <div id="accountSummary" class="chips"></div>
+          <div class="row-wrap">
+            <button id="exportBtn" class="btn">Export data (JSON)</button>
+            <input id="importFile" type="file" accept="application/json" class="hidden" />
+            <button id="importBtn" class="btn ghost">Import data</button>
+            <button id="wipeBtn" class="btn danger">Wipe all local data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Course Modal -->
+  <dialog class="modal" id="courseModal" aria-modal="true">
+    <div class="modal-head">
+      <div class="modal-title">
+        <div class="cover" id="modalCover" aria-hidden="true"></div>
+        <div>
+          <h3 id="modalTitle">Course title</h3>
+          <div class="tags">
+            <span class="tag" id="modalLevel"></span>
+            <span class="tag" id="modalLessonsCount"></span>
+            <span class="tag" id="modalTags"></span>
+          </div>
+        </div>
+      </div>
+      <button class="icon-btn" id="closeModalBtn" aria-label="Close">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <p id="modalDesc" class="muted"></p>
+
+      <div class="progress">
+        <div id="modalProgressBar"></div>
+      </div>
+      <p class="muted small"><span id="modalProgressLabel">0%</span> complete</p>
+
+      <ol id="lessonsList" class="lessons"></ol>
+
+      <div class="modal-actions">
+        <button id="enrollBtn" class="btn primary">Enroll</button>
+        <button id="unenrollBtn" class="btn ghost">Unenroll</button>
+        <button id="markAllBtn" class="btn">Mark all complete</button>
+        <button id="resetProgressBtn" class="btn ghost">Reset progress</button>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="wrap footer">
+    <span>© <span id="year"></span> LiteLearn • Local-first, no
